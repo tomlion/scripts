@@ -20,7 +20,7 @@ exec &> /root/stackscript.log
     echo "Essentials installed"
 
 # Install nodejs for javascript runtime
-    export NODEJS_VERSION="v0.6.14"
+    export NODEJS_VERSION="v0.8.8"
     echo "Installing Nodejs $NODEJS_VERSION"
     echo "Downloading: (from calling wget http://nodejs.org/dist/$NODEJS_VERSION/node-$NODEJS_VERSION.tar.gz)"
     wget http://nodejs.org/dist/$NODEJS_VERSION/node-$NODEJS_VERSION.tar.gz
@@ -38,7 +38,7 @@ exec &> /root/stackscript.log
     echo "Nodejs installed"
 
 # Install Redis
-    export REDIS_VERSION="redis-2.4.10"
+    export REDIS_VERSION="redis-2.4.16"
     echo "Installing Redis $REDIS_VERSION"
     echo "Downloading: (from calling wget http://redis.googlecode.com/files/$REDIS_VERSION.tar.gz)"
     wget http://redis.googlecode.com/files/$REDIS_VERSION.tar.gz
@@ -66,7 +66,7 @@ exec &> /root/stackscript.log
     cd ..
 
 # Installing Ruby
-    export RUBY_VERSION="ruby-1.9.3-p125"
+    export RUBY_VERSION="ruby-1.9.3-p194"
     echo "Installing Ruby $RUBY_VERSION"
     echo "Downloading: (from calling wget http://ftp.ruby-lang.org/pub/ruby/1.9/$RUBY_VERSION.tar.gz)"
     wget http://ftp.ruby-lang.org/pub/ruby/1.9/$RUBY_VERSION.tar.gz
