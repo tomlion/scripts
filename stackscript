@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # See: https://github.com/simpx/scripts/blob/master/stackscript
-# Install: Ruby 1.9.3, Nodejs 0.6.14, Mongodb and Nginx with Passenger
+# Install: Ruby 1.9.3, Nodejs, Redis, Mongodb and Nginx with Passenger
 # Reference: https://www.linode.com/stackscripts/view/?StackScriptID=1291
 #
 # <UDF name="rr_env" Label="Rails/Rack environment to run" default="production" />
@@ -135,6 +135,7 @@ EOF
     apt-get install mongodb-10gen
 
 # Add deploy user
+    export DEPLOY_USER='deploy'
     echo "Add deploy user: $DEPLOY_USER"
     echo "$DEPLOY_USER:$DEPLOY_USER:1000:1000::/home/$DEPLOY_USER:/bin/bash" | newusers
     cp -a /etc/skel/.[a-z]* /home/$DEPLOY_USER/
