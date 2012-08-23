@@ -18,7 +18,7 @@ exec &> /root/stackscript.log
     apt-get -y install aptitude
     aptitude -y full-upgrade
 
-    apt-get -y install build-essential zlib1g-dev libssl-dev libreadline5-dev openssh-server libyaml-dev libcurl4-openssl-dev libxslt-dev libxml2-dev libpcre3 libpcre3-dev
+    apt-get -y install build-essential bison openssl libreadline6 libreadline6-dev libcurl4-openssl-dev git-core zlib1g zlib1g-dev  libssl-dev libyaml-dev libsqlite3-0 libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev curl 
 
     #good stuff
     aptitude -y install wget vim less
