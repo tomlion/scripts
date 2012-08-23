@@ -7,16 +7,24 @@
 # <UDF name="rr_env" Label="Rails/Rack environment to run" default="production" />
 # <UDF name="deploy_user" Label="Username of deploy user" default="deploy" />
 
-source <ssinclude StackScriptID=1>
-
 exec &> /root/stackscript.log
 
 # Update packages and install essentials
     cd /tmp
     echo "Start to install! Good Luck!"
-    system_update
+
+    #system_update
+    apt-get update
+    apt-get -y install aptitude
+    aptitude -y full-upgrade
+
     apt-get -y install build-essential zlib1g-dev libssl-dev libreadline5-dev openssh-server libyaml-dev libcurl4-openssl-dev libxslt-dev libxml2-dev libpcre3 libpcre3-dev
-    goodstuff
+
+    #good stuff
+    aptitude -y install wget vim less
+    sed -i -e 's/^#PS1=/PS1=/' /root/.bashrc # enable the colorful root bash prompt
+    sed -i -e "s/^#alias ll='ls -l'/alias ll='ls -al'/" /root/.bashrc # enable ll list long alias <3
+
     echo "Essentials installed"
 
 # Install nodejs for javascript runtime
