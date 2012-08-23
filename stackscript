@@ -9,6 +9,14 @@
 
 exec &> /root/stackscript.log
 
+#EXPORTS
+    export NODEJS_VERSION="v0.8.8"
+    export REDIS_VERSION="redis-2.4.16"
+    export RUBY_VERSION="ruby-1.9.3-p194"
+    export GIT_USER='git'
+    export GIT_REPO_DIR='tomlion'
+    export DEPLOY_USER='deploy'
+
 # Update packages and install essentials
     cd /tmp
     echo "Start to install! Good Luck!"
@@ -28,7 +36,6 @@ exec &> /root/stackscript.log
     echo "Essentials installed"
 
 # Install nodejs for javascript runtime
-    export NODEJS_VERSION="v0.8.8"
     echo "Installing Nodejs $NODEJS_VERSION"
     echo "Downloading: (from calling wget http://nodejs.org/dist/$NODEJS_VERSION/node-$NODEJS_VERSION.tar.gz)"
     wget http://nodejs.org/dist/$NODEJS_VERSION/node-$NODEJS_VERSION.tar.gz
@@ -46,7 +53,6 @@ exec &> /root/stackscript.log
     echo "Nodejs installed"
 
 # Install Redis
-    export REDIS_VERSION="redis-2.4.16"
     echo "Installing Redis $REDIS_VERSION"
     echo "Downloading: (from calling wget http://redis.googlecode.com/files/$REDIS_VERSION.tar.gz)"
     wget http://redis.googlecode.com/files/$REDIS_VERSION.tar.gz
@@ -57,8 +63,8 @@ exec &> /root/stackscript.log
     make install
     # Download Configuration for redis
     echo "Downloading Configuration files"
-    wget https://raw.github.com/simpx/scripts/master/redis.conf
-    wget https://raw.github.com/simpx/scripts/master/redis-server
+    wget https://raw.github.com/tomlion/scripts/master/redis.conf
+    wget https://raw.github.com/tomlion/scripts/master/redis-server
     mv redis-server /etc/init.d/redis-server
     chmod +x /etc/init.d/redis-server
     mv redis.conf /etc/redis.conf
@@ -74,7 +80,6 @@ exec &> /root/stackscript.log
     cd ..
 
 # Installing Ruby
-    export RUBY_VERSION="ruby-1.9.3-p194"
     echo "Installing Ruby $RUBY_VERSION"
     echo "Downloading: (from calling wget http://ftp.ruby-lang.org/pub/ruby/1.9/$RUBY_VERSION.tar.gz)"
     wget http://ftp.ruby-lang.org/pub/ruby/1.9/$RUBY_VERSION.tar.gz
@@ -97,7 +102,7 @@ exec &> /root/stackscript.log
     passenger-install-nginx-module --auto --auto-download --prefix="/usr/local/nginx"
     #set up nginx
     ln -s /usr/local/nginx/sbin/nginx /usr/local/sbin
-    wget https://raw.github.com/simpx/scripts/master/nginx
+    wget https://raw.github.com/tomlion/scripts/master/nginx
     mv nginx /etc/init.d/nginx
     chmod +x /etc/init.d/nginx
     # Start nginx during boot and stop during shutdown
@@ -106,6 +111,14 @@ exec &> /root/stackscript.log
 # Install git
     echo "Installing Git"
     apt-get -y install git-core
+
+    echo "Add git user: $GIT_USER"
+    echo "$GIT_USER:$GIT_USER:1001:1001::/home/$GIT_USER:/usr/bin/git-shell" | newusers
+    cp /usr/share/doc/git/contrib/git-shell-commands /home/$GIT_USER/ -R
+    mkdir /home/$GIT_USER/$GIT_RERP_DIR
+    chown -R $GIT_USER /home/$GIT_USER
+    chmod +x /home/$GIT_USER/git-shell-commands/help
+    chmod +x /home/$GIT_USER/git-shell-commands/list
 
 # Set up rails environment
     if [ ! -n "$RR_ENV" ]; then
@@ -135,7 +148,6 @@ EOF
     apt-get install mongodb-10gen
 
 # Add deploy user
-    export DEPLOY_USER='deploy'
     echo "Add deploy user: $DEPLOY_USER"
     echo "$DEPLOY_USER:$DEPLOY_USER:1000:1000::/home/$DEPLOY_USER:/bin/bash" | newusers
     cp -a /etc/skel/.[a-z]* /home/$DEPLOY_USER/
